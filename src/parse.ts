@@ -8,7 +8,7 @@ function parseTag(str: string, tagStart: number): { tagEnd: number, tag: Tag | n
   const titleEnd = findFirstUnescapedCharacter(str, '|]', titleStart);
   if (titleEnd === -1)
     return { tagEnd: tagStart, tag: null };
-  const type = str.substring(titleStart, titleEnd);
+  const type = unescape(str.substring(titleStart, titleEnd));
   const args: Array<ParsedString> = [];
   if (str[titleEnd] === ']')
     return {
