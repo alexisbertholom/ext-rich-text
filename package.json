@@ -1,0 +1,17 @@
+{
+  "name": "ext-rich-text",
+  "version": "0.1.0",
+  "description": "",
+  "author": "Alexis Bertholom <alexis.bertholom.jd@gmail.com> (http://github.com/alexisbertholom)",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf build dist",
+    "dist": "npm run clean && tsc --declaration --outDir dist"
+  },
+  "devDependencies": {
+    "typescript": "^3.3.3333"
+  }
+}
