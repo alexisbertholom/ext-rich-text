@@ -6,7 +6,7 @@ function parseTag(str, tagStart) {
     const titleEnd = utils_1.findFirstUnescapedCharacter(str, '|]', titleStart);
     if (titleEnd === -1)
         return { tagEnd: tagStart, tag: null };
-    const type = str.substring(titleStart, titleEnd);
+    const type = unescape(str.substring(titleStart, titleEnd));
     const args = [];
     if (str[titleEnd] === ']')
         return {

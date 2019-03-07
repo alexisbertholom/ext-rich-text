@@ -11,4 +11,7 @@ exports.parse = parse_1.default;
 var format_1 = require("./format");
 exports.format = format_1.default;
 exports.strip = format_1.strip;
+var build_1 = require("./build");
+exports.build = build_1.default;
+exports.shorthandBuild = build_1.shorthandBuild;
 //# sourceMappingURL=index.js.map
