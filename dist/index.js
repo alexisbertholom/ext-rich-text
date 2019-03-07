@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./types"));
 var escape_1 = require("./escape");
 exports.escape = escape_1.default;
+exports.unescape = escape_1.unescape;
 var parse_1 = require("./parse");
 exports.parse = parse_1.default;
 var format_1 = require("./format");
