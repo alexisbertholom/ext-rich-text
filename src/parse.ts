@@ -67,6 +67,9 @@ function parseString(str: string, fromIndex: number = 0, insideTag: boolean): { 
   };
 }
 
+/*
+ * Parse a rich-text string into a ParsedString AST
+ */
 export default function parse(str: string, fromIndex: number = 0): ParsedString
 {
   return parseString(str, fromIndex, false).result;

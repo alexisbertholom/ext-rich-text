@@ -40,6 +40,13 @@ function formatNode<NodeContentT>(node: Node, opts: FormatOptions<NodeContentT>)
   );
 }
 
+/*
+ * Transform a ParsedString AST into a custom NodeContentT format, which can be anything, using the provided options.
+ * The `handlers` map specifies a transform function for each handled tag type.
+ *   Unhandled tags are stripped (replaced with their `node` value if existing, removed otherwise).
+ * The `formatString` function is used to format every string Node.
+ * The `mergeNodeContents` function merges multiple items (NodeContentT) into one.
+ */
 export function formatParsedString<NodeContentT>(parsedString: ParsedString, opts: FormatOptions<NodeContentT>): NodeContentT
 {
   const { mergeNodeContents } = opts;

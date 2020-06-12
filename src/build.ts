@@ -28,6 +28,9 @@ export function _build(args: ParsedString)
   ), '');
 }
 
+/*
+ * Serialize ParsedString AST to a rich-text string
+ */
 export default function build(...args: ParsedString): string
 {
   return _build(args);

@@ -32,6 +32,9 @@ function translateSHParsedString(args: SHParsedString | string): ParsedString
   return args.map(translateSHNode);
 }
 
+/*
+ * Serialize ShortHand ParsedString AST to a rich-text string
+ */
 export default function shorthandBuild(...args: SHParsedString): string
 {
   return _build(translateSHParsedString(args));
