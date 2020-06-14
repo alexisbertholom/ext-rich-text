@@ -6,7 +6,7 @@ export type HandlersMap = Map<string, (content: string | null, ...args: string[]
 function formatTag(tag: Tag, handlers?: HandlersMap): string | null
 {
   const { type, args, node } = tag;
-  const content = node && formatParsedString(node, handlers);
+  const content = (node === null) ? null : formatParsedString(node, handlers);
   if (handlers)
   {
     const handler = handlers.get(type);
