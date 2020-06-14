@@ -1,1 +1,2 @@
-export { default, strip } from './string';
+export { formatParsedString } from './ast';
+export { default, strip, formatToString } from './string';
