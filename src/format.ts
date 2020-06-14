@@ -1,22 +1,22 @@
 import parse from './parse';
 import { Tag, Node, ParsedString, isTag } from './types';
 
-export type HandlersMap = Map<string, (textValue: string | null, ...args: string[]) => string>;
+export type HandlersMap = Map<string, (content: string | null, ...args: string[]) => string>;
 
 function formatTag(tag: Tag, handlers?: HandlersMap): string
 {
   const { type, args, node } = tag;
-  const textValue = node && formatParsedString(node, handlers);
+  const content = node && formatParsedString(node, handlers);
   if (handlers)
   {
     const handler = handlers.get(type);
     if (handler)
     {
       const parsedArgs = args.map(arg => formatParsedString(arg, handlers));
-      return handler(textValue, ...parsedArgs);
+      return handler(content, ...parsedArgs);
     }
   }
-  return textValue || '';
+  return content || '';
 }
 
 function formatNode(node: Node, handlers?: HandlersMap): string
