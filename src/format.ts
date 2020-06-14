@@ -3,7 +3,7 @@ import { Tag, Node, ParsedString, isTag } from './types';
 
 export type HandlersMap = Map<string, (content: string | null, ...args: string[]) => string>;
 
-function formatTag(tag: Tag, handlers?: HandlersMap): string
+function formatTag(tag: Tag, handlers?: HandlersMap): string | null
 {
   const { type, args, node } = tag;
   const content = node && formatParsedString(node, handlers);
@@ -16,10 +16,10 @@ function formatTag(tag: Tag, handlers?: HandlersMap): string
       return handler(content, ...parsedArgs);
     }
   }
-  return content || '';
+  return content;
 }
 
-function formatNode(node: Node, handlers?: HandlersMap): string
+function formatNode(node: Node, handlers?: HandlersMap): string | null
 {
   return isTag(node) ? (
     formatTag(node, handlers)
@@ -30,9 +30,12 @@ function formatNode(node: Node, handlers?: HandlersMap): string
 
 function formatParsedString(parsedString: ParsedString, handlers?: HandlersMap): string
 {
-  return parsedString.reduce<string>((result: string, node: Node) => (
-    result + formatNode(node, handlers)
-  ), '');
+  return parsedString.reduce<string>((result: string, node: Node) => {
+    const nodeContent = formatNode(node, handlers);
+    if (nodeContent === null)
+      return result;
+    return result + nodeContent;
+  }, '');
 }
 
 export default function format(str: string, handlers?: HandlersMap): string
