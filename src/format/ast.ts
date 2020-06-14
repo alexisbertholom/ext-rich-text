@@ -1,5 +1,4 @@
-import parse from './parse';
-import { Tag, Node, ParsedString, isTag } from './types';
+import { Tag, Node, ParsedString, isTag } from '../types';
 
 export type HandlersMap<NodeContentT> = Map<string, (content: NodeContentT | null, ...args: NodeContentT[]) => NodeContentT>;
 
@@ -51,37 +50,4 @@ export function formatParsedString<NodeContentT>(parsedString: ParsedString, opt
       contents.push(content);
   }
   return mergeNodeContents(contents);
-}
-
-function identity<T>(item: T): T
-{
-  return item;
-}
-
-function _mergeStrings(strings: Array<string>)
-{
-  return strings.join('');
-}
-
-export function formatToString(
-  parsedString: ParsedString,
-  opts: Partial<Pick<FormatOptions<string>, 'formatString' | 'handlers'>>,
-): string
-{
-  const { formatString, handlers } = opts;
-  return formatParsedString(parsedString, {
-    formatString: formatString || identity,
-    mergeNodeContents: _mergeStrings,
-    handlers,
-  });
-}
-
-export default function format(str: string, handlers?: HandlersMap<string>): string
-{
-  return formatToString(parse(str), { handlers });
-}
-
-export function strip(str: string)
-{
-  return format(str);
 }
