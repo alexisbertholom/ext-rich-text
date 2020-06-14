@@ -1,4 +1,6 @@
-import { Tag, Node, ParsedString, isTag } from './types';
+import type { Tag, Node, ParsedString } from './types';
+
+import { isTag } from './types';
 import escape from './escape';
 
 function formatTag(tag: Tag): string

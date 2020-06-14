@@ -1,5 +1,6 @@
+import type { Tag, ParsedString } from './types';
+
 import { findFirstUnescapedCharacter } from './utils';
-import { Tag, ParsedString } from './types';
 
 //Returns { tag: null } if no tag end is found
 function parseTag(str: string, tagStart: number): { tagEnd: number, tag: Tag | null }

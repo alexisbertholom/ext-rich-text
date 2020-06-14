@@ -1,6 +1,8 @@
-import { ParsedString } from '../types';
+import type { ParsedString } from '../types';
+import type { HandlersMap, FormatOptions } from './ast';
+
 import parse from '../parse';
-import { HandlersMap, FormatOptions, formatParsedString } from './ast';
+import { formatParsedString } from './ast';
 
 function identity<T>(item: T): T
 {

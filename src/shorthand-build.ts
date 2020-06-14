@@ -1,9 +1,10 @@
-import {
+import type {
   SHTag, Tag,
   SHNode, Node,
   SHParsedString, ParsedString,
-  isSHTag,
 } from './types';
+
+import { isSHTag } from './types';
 import { _build } from './build';
 
 function translateSHTag(tag: SHTag): Tag
