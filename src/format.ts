@@ -1,46 +1,84 @@
 import parse from './parse';
 import { Tag, Node, ParsedString, isTag } from './types';
 
-export type HandlersMap = Map<string, (content: string | null, ...args: string[]) => string>;
+export type HandlersMap<NodeContentT> = Map<string, (content: NodeContentT | null, ...args: NodeContentT[]) => NodeContentT>;
 
-function formatTag(tag: Tag, handlers?: HandlersMap): string | null
+export interface FormatOptions<NodeContentT>
 {
+  formatString: (s: string) => NodeContentT,
+  mergeNodeContents: (contents: Array<NodeContentT>) => NodeContentT,
+  handlers?: HandlersMap<NodeContentT>,
+}
+
+function formatTag<NodeContentT>(tag: Tag, opts: FormatOptions<NodeContentT>): NodeContentT | null
+{
+  const { handlers } = opts;
+
   const { type, args, node } = tag;
-  const content = (node === null) ? null : formatParsedString(node, handlers);
+  const content = (node === null) ? null : formatParsedString(node, opts);
   if (handlers)
   {
     const handler = handlers.get(type);
     if (handler)
     {
-      const parsedArgs = args.map(arg => formatParsedString(arg, handlers));
+      const parsedArgs = args.map(arg => formatParsedString(arg, opts));
       return handler(content, ...parsedArgs);
     }
   }
   return content;
 }
 
-function formatNode(node: Node, handlers?: HandlersMap): string | null
+function formatNode<NodeContentT>(node: Node, opts: FormatOptions<NodeContentT>): NodeContentT | null
 {
+  const { formatString } = opts;
+
   return isTag(node) ? (
-    formatTag(node, handlers)
+    formatTag<NodeContentT>(node, opts)
   ) : (
-    node
+    formatString(node)
   );
 }
 
-function formatParsedString(parsedString: ParsedString, handlers?: HandlersMap): string
+export function formatParsedString<NodeContentT>(parsedString: ParsedString, opts: FormatOptions<NodeContentT>): NodeContentT
 {
-  return parsedString.reduce<string>((result: string, node: Node) => {
-    const nodeContent = formatNode(node, handlers);
-    if (nodeContent === null)
-      return result;
-    return result + nodeContent;
-  }, '');
+  const { mergeNodeContents } = opts;
+
+  const contents = new Array<NodeContentT>();
+  for (const node of parsedString)
+  {
+    const content = formatNode(node, opts);
+    if (content)
+      contents.push(content);
+  }
+  return mergeNodeContents(contents);
 }
 
-export default function format(str: string, handlers?: HandlersMap): string
+function identity<T>(item: T): T
 {
-  return formatParsedString(parse(str), handlers);
+  return item;
+}
+
+function _mergeStrings(strings: Array<string>)
+{
+  return strings.join('');
+}
+
+export function formatToString(
+  parsedString: ParsedString,
+  opts: Partial<Pick<FormatOptions<string>, 'formatString' | 'handlers'>>,
+): string
+{
+  const { formatString, handlers } = opts;
+  return formatParsedString(parsedString, {
+    formatString: formatString || identity,
+    mergeNodeContents: _mergeStrings,
+    handlers,
+  });
+}
+
+export default function format(str: string, handlers?: HandlersMap<string>): string
+{
+  return formatToString(parse(str), { handlers });
 }
 
 export function strip(str: string)
