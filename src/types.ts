@@ -37,9 +37,7 @@ export function isTag(node: Node): node is Tag
 
 export type SHTag = [ string, ...(SHParsedString | string)[] ];
 export type SHNode = string | SHTag;
-
-//interface used instead of type to prevent typescript's type aliases circular references
-export interface SHParsedString extends Array<SHNode> {};
+export type SHParsedString = Array<SHNode>;
 
 export function isSHTag(node: SHNode): node is SHTag
 {
