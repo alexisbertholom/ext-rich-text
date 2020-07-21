@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.findFirstUnescapedCharacter = void 0;
-function findFirstUnescapedCharacter(str, searchedCharacters, fromIndex = 0) {
+export function findFirstUnescapedCharacter(str, searchedCharacters, fromIndex = 0) {
     if (searchedCharacters.length > 1) {
         const results = searchedCharacters.split('').map(character => (findFirstUnescapedCharacter(str, character, fromIndex))).filter(index => (index !== -1));
         return results.length > 0 ? (results.reduce((min, value) => Math.min(min, value))) : -1;
@@ -12,5 +9,4 @@ function findFirstUnescapedCharacter(str, searchedCharacters, fromIndex = 0) {
             return pos;
     return -1;
 }
-exports.findFirstUnescapedCharacter = findFirstUnescapedCharacter;
 //# sourceMappingURL=utils.js.map
