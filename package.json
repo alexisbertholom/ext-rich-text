@@ -12,6 +12,8 @@
     "dist": "npm run clean && tsc --declaration --outDir dist"
   },
   "devDependencies": {
+    "@types/react": "^16.9.43",
+    "react": "^16.13.1",
     "typescript": "^3.9.5"
   }
 }
