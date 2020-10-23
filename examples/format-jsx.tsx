@@ -10,8 +10,8 @@ const elements = formatParsedString<RenderType>(parse(SimpleBoldText), {
   formatString: (s: string) => s,
   mergeNodeContents: (contents: Array<RenderType>) => contents,
   handlers: new Map([
-    [ 'bold' , (text: NodeContentT) => (<b>{text}</b>) ],
-    [ 'link', (url: string, text: NodeContentT) => (<a href={url}>{text}</a>) ],
+    [ 'bold' , (text: RenderType) => (<b>{text}</b>) ],
+    [ 'link', (url: string, text: RenderType) => (<a href={url}>{text}</a>) ],
     [ 'line-break', () => (<br/>) ],
   ]),
 });
