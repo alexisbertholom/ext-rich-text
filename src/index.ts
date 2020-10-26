@@ -1,3 +1,5 @@
+export type { HandlersMap } from './format';
+
 export * from './types';
 export { default as escape, unescape } from './escape';
 export { default as parse } from './parse';
