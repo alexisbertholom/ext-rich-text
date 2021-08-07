@@ -2,7 +2,7 @@ import type { Tag, Node, ParsedString } from '../types';
 
 import { isTag } from '../types';
 
-export type TagHandler<NodeContentT> = (args: NodeContentT[]) => NodeContentT;
+export type TagHandler<NodeContentT> = (args: ParsedString[], opts: FormatOptions<NodeContentT>) => NodeContentT;
 export type HandlersMap<NodeContentT> = Map<string, TagHandler<NodeContentT>>;
 
 export interface FormatOptions<NodeContentT>
@@ -21,10 +21,7 @@ function formatTag<NodeContentT>(tag: Tag, opts: FormatOptions<NodeContentT>): N
   {
     const handler = handlers.get(type);
     if (handler)
-    {
-      const parsedArgs = args.map(arg => formatParsedString(arg, opts));
-      return handler(parsedArgs);
-    }
+      return handler(args, opts);
   }
   if (args.length > 0)
   {
