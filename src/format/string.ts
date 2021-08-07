@@ -22,7 +22,7 @@ function _mergeStrings(strings: Array<string>)
  */
 export function formatToString(
   ast: RichTextAST,
-  opts: Partial<Pick<FormatOptions<string>, 'formatString' | 'handlers'>>,
+  opts: Partial<Pick<FormatOptions<string>, 'formatString' | 'handlers'>> = {},
 ): string
 {
   const { formatString, handlers } = opts;
