@@ -13,15 +13,15 @@
 export interface Tag
 {
   type: string,
-  args: Array<ParsedString>,
+  args: Array<RichTextAST>,
 };
 
 export type Node = string | Tag;
 
 /*
- * A ParsedString is the AST representation of a rich-text string, composed of one or more Node
+ * A RichTextAST is the AST representation of a rich-text string, composed of one or more Node
  */
-export type ParsedString = Array<Node>;
+export type RichTextAST = Array<Node>;
 
 export function isTag(node: Node): node is Tag
 {
@@ -31,9 +31,9 @@ export function isTag(node: Node): node is Tag
 
 //Shorthand (SH) variation of the AST types:
 
-export type SHTag = [ string, ...(SHParsedString | string)[] ];
+export type SHTag = [ string, ...(SHRichTextAST | string)[] ];
 export type SHNode = string | SHTag;
-export type SHParsedString = Array<SHNode>;
+export type SHRichTextAST = Array<SHNode>;
 
 export function isSHTag(node: SHNode): node is SHTag
 {

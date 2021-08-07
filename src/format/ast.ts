@@ -1,8 +1,8 @@
-import type { Tag, Node, ParsedString } from '../types';
+import type { Tag, Node, RichTextAST } from '../types';
 
 import { isTag } from '../types';
 
-export type TagHandler<NodeContentT> = (args: Array<ParsedString>, opts: FormatOptions<NodeContentT>) => NodeContentT;
+export type TagHandler<NodeContentT> = (args: Array<RichTextAST>, opts: FormatOptions<NodeContentT>) => NodeContentT;
 export type HandlersMap<NodeContentT> = Map<string, TagHandler<NodeContentT>>;
 
 export interface FormatOptions<NodeContentT>
@@ -26,7 +26,7 @@ function formatTag<NodeContentT>(tag: Tag, opts: FormatOptions<NodeContentT>): N
   if (args.length > 0)
   {
     const lastArg = args[args.length - 1];
-    return formatParsedString(lastArg, opts);
+    return formatAST(lastArg, opts);
   }
   return null;
 }
@@ -43,18 +43,18 @@ function formatNode<NodeContentT>(node: Node, opts: FormatOptions<NodeContentT>)
 }
 
 /*
- * Transform a ParsedString AST into a custom NodeContentT format, which can be anything, using the provided options.
+ * Transform a RichTextAST into a custom NodeContentT format, which can be anything, using the provided options.
  * The `handlers` map specifies a transform function for each handled tag type.
  *   Unhandled tags are stripped (replaced with their last arg as fallback value if specified, removed otherwise).
  * The `formatString` function is used to format every string Node.
  * The `mergeNodeContents` function merges multiple items (NodeContentT) into one.
  */
-export function formatParsedString<NodeContentT>(parsedString: ParsedString, opts: FormatOptions<NodeContentT>): NodeContentT
+export function formatAST<NodeContentT>(ast: RichTextAST, opts: FormatOptions<NodeContentT>): NodeContentT
 {
   const { mergeNodeContents } = opts;
 
   const contents = new Array<NodeContentT>();
-  for (const node of parsedString)
+  for (const node of ast)
   {
     const content = formatNode(node, opts);
     if (content)

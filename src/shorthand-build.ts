@@ -1,7 +1,7 @@
 import type {
   SHTag, Tag,
   SHNode, Node,
-  SHParsedString, ParsedString,
+  SHRichTextAST, RichTextAST,
 } from './types';
 
 import { isSHTag } from './types';
@@ -10,7 +10,7 @@ import { _build } from './build';
 function translateSHTag(tag: SHTag): Tag
 {
   const [ type, ..._args ] = tag;
-  const args = _args.map(translateSHParsedString);
+  const args = _args.map(translateSHRichTextAST);
   return {
     type,
     args,
@@ -24,7 +24,7 @@ function translateSHNode(node: SHNode): Node
   ) : node;
 }
 
-function translateSHParsedString(args: SHParsedString | string): ParsedString
+function translateSHRichTextAST(args: SHRichTextAST | string): RichTextAST
 {
   if (typeof(args) === 'string')
     return [ args ];
@@ -32,9 +32,9 @@ function translateSHParsedString(args: SHParsedString | string): ParsedString
 }
 
 /*
- * Serialize ShortHand ParsedString AST to a rich-text string
+ * Serialize ShortHand RichTextAST to a rich-text string
  */
-export default function shorthandBuild(...args: SHParsedString): string
+export default function shorthandBuild(...args: SHRichTextAST): string
 {
-  return _build(translateSHParsedString(args));
+  return _build(translateSHRichTextAST(args));
 }

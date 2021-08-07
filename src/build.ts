@@ -1,4 +1,4 @@
-import type { Tag, Node, ParsedString } from './types';
+import type { Tag, Node, RichTextAST } from './types';
 
 import { isTag } from './types';
 import escape from './escape';
@@ -20,7 +20,7 @@ function formatNode(node: Node): string
   );
 }
 
-export function _build(args: ParsedString)
+export function _build(args: RichTextAST)
 {
   return args.reduce<string>((result: string, node: Node) => (
     result + formatNode(node)
@@ -28,9 +28,9 @@ export function _build(args: ParsedString)
 }
 
 /*
- * Serialize ParsedString AST to a rich-text string
+ * Serialize rich-text AST to a rich-text string
  */
-export default function build(...args: ParsedString): string
+export default function build(...args: RichTextAST): string
 {
   return _build(args);
 }

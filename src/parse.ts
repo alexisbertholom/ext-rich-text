@@ -1,4 +1,4 @@
-import type { Tag, ParsedString } from './types';
+import type { Tag, RichTextAST } from './types';
 
 import { findFirstUnescapedCharacter } from './utils';
 
@@ -10,7 +10,7 @@ function parseTag(str: string, tagStart: number): { tagEnd: number, tag: Tag | n
   if (titleEnd === -1)
     return { tagEnd: tagStart, tag: null };
   const type = unescape(str.substring(titleStart, titleEnd));
-  const args: Array<ParsedString> = [];
+  const args: Array<RichTextAST> = [];
   if (str[titleEnd] === ']')
     return {
       tagEnd: titleEnd + 1,
@@ -36,10 +36,10 @@ function parseTag(str: string, tagStart: number): { tagEnd: number, tag: Tag | n
   };
 }
 
-function parseString(str: string, fromIndex: number = 0, insideTag: boolean): { result: ParsedString, end: number }
+function parseString(str: string, fromIndex: number = 0, insideTag: boolean): { result: RichTextAST, end: number }
 {
   const searchedCharacters = insideTag ? '[]|' : '[';
-  const result: ParsedString = [];
+  const result: RichTextAST = [];
   let pos = fromIndex;
   let tagStart: number;
   let end = str.length;
@@ -67,9 +67,9 @@ function parseString(str: string, fromIndex: number = 0, insideTag: boolean): { 
 }
 
 /*
- * Parse a rich-text string into a ParsedString AST
+ * Parse a rich-text string into a rich-text AST
  */
-export default function parse(str: string, fromIndex: number = 0): ParsedString
+export default function parse(str: string, fromIndex: number = 0): RichTextAST
 {
   return parseString(str, fromIndex, false).result;
 }

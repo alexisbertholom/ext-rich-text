@@ -1,8 +1,8 @@
-import type { ParsedString } from '../types';
+import type { RichTextAST } from '../types';
 import type { HandlersMap, FormatOptions } from './ast';
 
 import parse from '../parse';
-import { formatParsedString } from './ast';
+import { formatAST } from './ast';
 
 function identity<T>(item: T): T
 {
@@ -15,18 +15,18 @@ function _mergeStrings(strings: Array<string>)
 }
 
 /*
- * Transform a ParsedString AST to a string, using the provided options.
+ * Transform a RichTextAST to a string, using the provided options.
  * The `handlers` map specifies a transform function for each handled tag type.
  *   Unhandled tags are stripped (replaced with their last arg as fallback value if specified, removed otherwise).
  * The `formatString` optional function is used to format every string Node if specified.
  */
 export function formatToString(
-  parsedString: ParsedString,
+  ast: RichTextAST,
   opts: Partial<Pick<FormatOptions<string>, 'formatString' | 'handlers'>>,
 ): string
 {
   const { formatString, handlers } = opts;
-  return formatParsedString(parsedString, {
+  return formatAST(ast, {
     formatString: formatString || identity,
     mergeNodeContents: _mergeStrings,
     handlers,
