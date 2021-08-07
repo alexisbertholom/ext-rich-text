@@ -3,7 +3,7 @@ import type { Tag, Node, RichTextAST } from '../types';
 import { isTag } from '../types';
 
 export type TagHandler<NodeContentT> = (args: Array<RichTextAST>, opts: FormatOptions<NodeContentT>) => NodeContentT;
-export type HandlersMap<NodeContentT> = Map<string, TagHandler<NodeContentT>>;
+export type HandlersMap<NodeContentT> = Record<string, TagHandler<NodeContentT>>;
 
 export interface FormatOptions<NodeContentT>
 {
@@ -19,7 +19,7 @@ function formatTag<NodeContentT>(tag: Tag, opts: FormatOptions<NodeContentT>): N
   const { type, args } = tag;
   if (handlers)
   {
-    const handler = handlers.get(type);
+    const handler = handlers[type];
     if (handler)
       return handler(args, opts);
   }
