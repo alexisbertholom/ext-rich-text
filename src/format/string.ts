@@ -17,7 +17,7 @@ function _mergeStrings(strings: Array<string>)
 /*
  * Transform a ParsedString AST to a string, using the provided options.
  * The `handlers` map specifies a transform function for each handled tag type.
- *   Unhandled tags are stripped (replaced with their `node` value if existing, removed otherwise).
+ *   Unhandled tags are stripped (replaced with their last arg as fallback value if specified, removed otherwise).
  * The `formatString` optional function is used to format every string Node if specified.
  */
 export function formatToString(
@@ -36,7 +36,7 @@ export function formatToString(
 /*
  * Process a rich-text string, transforming tags to strings using the provided handlers map.
  * The handlers map specifies a transform function for each handled tag type.
- * Unhandled tags are stripped (replaced with their `node` value if existing).
+ * Unhandled tags are stripped (replaced with their last arg as fallback value if specified, removed otherwise).
  */
 export default function format(str: string, handlers?: HandlersMap<string>): string
 {
@@ -44,7 +44,7 @@ export default function format(str: string, handlers?: HandlersMap<string>): str
 }
 
 /*
- * Remove all tags from a rich-text string, replacing them with their `node` value if existing
+ * Remove all tags from a rich-text string, replacing them with their last arg as fallback value if existing.
  */
 export function strip(str: string): string
 {

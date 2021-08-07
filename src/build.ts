@@ -5,9 +5,8 @@ import escape from './escape';
 
 function formatTag(tag: Tag): string
 {
-  const { type, args, node } = tag;
-  const _args = node ? args.concat([ node ]) : args;
-  const parsedArgs = _args.map(arg => _build(arg));
+  const { type, args } = tag;
+  const parsedArgs = args.map(arg => _build(arg));
   const contents = [ escape(type) ].concat(parsedArgs).join('|');
   return `[${contents}]`;
 }

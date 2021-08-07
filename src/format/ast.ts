@@ -2,7 +2,7 @@ import type { Tag, Node, ParsedString } from '../types';
 
 import { isTag } from '../types';
 
-export type TagHandler<NodeContentT> = (content: NodeContentT | null, ...args: NodeContentT[]) => NodeContentT;
+export type TagHandler<NodeContentT> = (...args: NodeContentT[]) => NodeContentT;
 export type HandlersMap<NodeContentT> = Map<string, TagHandler<NodeContentT>>;
 
 export interface FormatOptions<NodeContentT>
@@ -16,18 +16,22 @@ function formatTag<NodeContentT>(tag: Tag, opts: FormatOptions<NodeContentT>): N
 {
   const { handlers } = opts;
 
-  const { type, args, node } = tag;
-  const content = (node === null) ? null : formatParsedString(node, opts);
+  const { type, args } = tag;
   if (handlers)
   {
     const handler = handlers.get(type);
     if (handler)
     {
       const parsedArgs = args.map(arg => formatParsedString(arg, opts));
-      return handler(content, ...parsedArgs);
+      return handler(...parsedArgs);
     }
   }
-  return content;
+  if (args.length > 0)
+  {
+    const lastArg = args[args.length - 1];
+    return formatParsedString(lastArg, opts);
+  }
+  return null;
 }
 
 function formatNode<NodeContentT>(node: Node, opts: FormatOptions<NodeContentT>): NodeContentT | null
@@ -44,7 +48,7 @@ function formatNode<NodeContentT>(node: Node, opts: FormatOptions<NodeContentT>)
 /*
  * Transform a ParsedString AST into a custom NodeContentT format, which can be anything, using the provided options.
  * The `handlers` map specifies a transform function for each handled tag type.
- *   Unhandled tags are stripped (replaced with their `node` value if existing, removed otherwise).
+ *   Unhandled tags are stripped (replaced with their last arg as fallback value if specified, removed otherwise).
  * The `formatString` function is used to format every string Node.
  * The `mergeNodeContents` function merges multiple items (NodeContentT) into one.
  */

@@ -14,7 +14,6 @@ function translateSHTag(tag: SHTag): Tag
   return {
     type,
     args,
-    node: args.pop() || null,
   };
 }
 

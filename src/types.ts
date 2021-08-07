@@ -1,23 +1,19 @@
 /*
  * The AST representation of a tag.
  *
- * A tag has a type.
- * It can have 0 or more string attributes.
- * The last of these attributes is the `node`.
- * The other ones are the `args`.
+ * A tag has a `type`, and 0 or more `args`.
  *
  * Example: [img|picture-url|alt-text]
- * In this example, `img` is the type, `picture-url` is the only arg, and `alt-text` is the node.
+ * In this example, `img` is the type, `picture-url` is the 1st arg, `alt-text` is 2nd arg.
  *
  * The type of the tag determines how to handle it.
  * The args are attributes specific to the tag type.
- * The node, if defined, is used as a fallback is the tag type is unhandled.
+ * If a tag type is unhandled, its last arg, if specified, is used as a fallback content.
  */
 export interface Tag
 {
   type: string,
   args: Array<ParsedString>,
-  node: ParsedString | null,
 };
 
 export type Node = string | Tag;
