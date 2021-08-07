@@ -46,7 +46,7 @@ export default function format(str: string, handlers?: HandlersMap<string>): str
 /*
  * Remove all tags from a rich-text string, replacing them with their `node` value if existing
  */
-export function strip(str: string)
+export function strip(str: string): string
 {
   return format(str);
 }
