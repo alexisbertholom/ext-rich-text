@@ -1,4 +1,6 @@
-import { format } from '../src/';
+import type { HandlersMap } from '../src/';
+
+import { format, formatAST, formatToString } from '../src/';
 import {
   SimpleBoldText,
   TagWithArg,
@@ -6,11 +8,11 @@ import {
   Linebreak,
 } from './serialized-rich-text-strings';
 
-const MarkdownHandlers = new Map([
-  [ 'bold', (text: string) => `**${text}**` ],
-  [ 'link', (url: string, text: string) => `[${text}](${url})` ],
-  [ 'line-break', () => '  \n' ],
-]);
+const MarkdownHandlers: HandlersMap<string> = {
+  bold: ([ text ], opts) => `**${formatAST(text, opts)}**`,
+  link: ([ url, text ], opts) => `[${formatAST(text, opts)}](${formatToString(url)})`,
+  "line-break": () => '  \n',
+};
 
 function log(richTextString: string)
 {

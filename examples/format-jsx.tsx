@@ -1,19 +1,23 @@
 import * as React from 'react';
-import { parse, formatParsedString } from '../src/';
+import { parse, formatAST, formatToString } from '../src/';
 import {
   SimpleBoldText,
 } from './serialized-rich-text-strings';
 
 type RenderType = JSX.Element | string | null | Array<RenderType>;
 
-const elements = formatParsedString<RenderType>(parse(SimpleBoldText), {
+const elements = formatAST<RenderType>(parse(SimpleBoldText), {
   formatString: (s: string) => s,
   mergeNodeContents: (contents: Array<RenderType>) => contents,
-  handlers: new Map([
-    [ 'bold' , (text: RenderType) => (<b>{text}</b>) ],
-    [ 'link', (url: string, text: RenderType) => (<a href={url}>{text}</a>) ],
-    [ 'line-break', () => (<br/>) ],
-  ]),
+  handlers: {
+    bold: ([ text ], opts) => (<b>{formatAST(text, opts)}</b>),
+    link: ([ url, text ], opts) => (
+      <a href={formatToString(url)}>
+        {formatAST(text, opts)}
+      </a>
+    ),
+    "line-break": () => (<br/>),
+  },
 });
 
 console.log(elements);
