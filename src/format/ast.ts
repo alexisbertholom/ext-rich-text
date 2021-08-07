@@ -2,7 +2,7 @@ import type { Tag, Node, ParsedString } from '../types';
 
 import { isTag } from '../types';
 
-export type TagHandler<NodeContentT> = (args: ParsedString[], opts: FormatOptions<NodeContentT>) => NodeContentT;
+export type TagHandler<NodeContentT> = (args: Array<ParsedString>, opts: FormatOptions<NodeContentT>) => NodeContentT;
 export type HandlersMap<NodeContentT> = Map<string, TagHandler<NodeContentT>>;
 
 export interface FormatOptions<NodeContentT>
