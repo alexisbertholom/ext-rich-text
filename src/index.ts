@@ -1,4 +1,4 @@
-export type { HandlersMap } from './format';
+export type { TagHandler, HandlersMap } from './format';
 
 export * from './types';
 export { default as escape, unescape } from './escape';
