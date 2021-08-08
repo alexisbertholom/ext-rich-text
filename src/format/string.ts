@@ -1,4 +1,4 @@
-import type { RichTextAST } from '../types';
+import type { ReadonlyRichTextAST } from '../types';
 import type { HandlersMap, FormatOptions } from './ast';
 
 import parse from '../parse';
@@ -21,7 +21,7 @@ function _mergeStrings(strings: Array<string>)
  * The `formatString` optional function is used to format every string Node if specified.
  */
 export function formatToString(
-  ast: RichTextAST,
+  ast: ReadonlyRichTextAST,
   opts: Partial<Pick<FormatOptions<string>, 'formatString' | 'handlers'>> = {},
 ): string
 {

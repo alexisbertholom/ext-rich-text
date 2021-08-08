@@ -1,13 +1,13 @@
 import type {
-  SHTag, Tag,
-  SHNode, Node,
-  SHRichTextAST, RichTextAST,
+  ReadonlySHTag, ReadonlyTag,
+  ReadonlySHNode, ReadonlyNode,
+  ReadonlySHRichTextAST, ReadonlyRichTextAST,
 } from './types';
 
 import { isSHTag } from './types';
 import { _build } from './build';
 
-function translateSHTag(tag: SHTag): Tag
+function translateSHTag(tag: ReadonlySHTag): ReadonlyTag
 {
   const [ type, ..._args ] = tag;
   const args = _args.map(translateSHRichTextAST);
@@ -17,14 +17,14 @@ function translateSHTag(tag: SHTag): Tag
   };
 }
 
-function translateSHNode(node: SHNode): Node
+function translateSHNode(node: ReadonlySHNode): ReadonlyNode
 {
   return isSHTag(node) ? (
     translateSHTag(node)
   ) : node;
 }
 
-function translateSHRichTextAST(args: SHRichTextAST | string): RichTextAST
+function translateSHRichTextAST(args: ReadonlySHRichTextAST | string): ReadonlyRichTextAST
 {
   if (typeof(args) === 'string')
     return [ args ];
@@ -34,7 +34,7 @@ function translateSHRichTextAST(args: SHRichTextAST | string): RichTextAST
 /*
  * Serialize ShortHand RichTextAST to a rich-text string
  */
-export default function shorthandBuild(...args: SHRichTextAST): string
+export default function shorthandBuild(...args: ReadonlySHRichTextAST): string
 {
   return _build(translateSHRichTextAST(args));
 }

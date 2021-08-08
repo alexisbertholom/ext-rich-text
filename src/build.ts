@@ -1,9 +1,9 @@
-import type { Tag, Node, RichTextAST } from './types';
+import type { ReadonlyTag, ReadonlyNode, ReadonlyRichTextAST } from './types';
 
 import { isTag } from './types';
 import escape from './escape';
 
-function formatTag(tag: Tag): string
+function formatTag(tag: ReadonlyTag): string
 {
   const { type, args } = tag;
   const parsedArgs = args.map(arg => _build(arg));
@@ -11,7 +11,7 @@ function formatTag(tag: Tag): string
   return `[${contents}]`;
 }
 
-function formatNode(node: Node): string
+function formatNode(node: ReadonlyNode): string
 {
   return isTag(node) ? (
     formatTag(node)
@@ -20,9 +20,9 @@ function formatNode(node: Node): string
   );
 }
 
-export function _build(args: RichTextAST)
+export function _build(args: ReadonlyRichTextAST): string
 {
-  return args.reduce<string>((result: string, node: Node) => (
+  return args.reduce<string>((result: string, node: ReadonlyNode) => (
     result + formatNode(node)
   ), '');
 }
@@ -30,7 +30,7 @@ export function _build(args: RichTextAST)
 /*
  * Serialize rich-text AST to a rich-text string
  */
-export default function build(...args: RichTextAST): string
+export default function build(...args: ReadonlyRichTextAST): string
 {
   return _build(args);
 }

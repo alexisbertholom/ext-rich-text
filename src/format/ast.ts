@@ -1,4 +1,4 @@
-import type { Tag, Node, RichTextAST, ReadonlyRichTextAST } from '../types';
+import type { ReadonlyTag, ReadonlyNode, ReadonlyRichTextAST } from '../types';
 
 import { isTag } from '../types';
 
@@ -12,7 +12,7 @@ export interface FormatOptions<NodeContentT>
   readonly handlers?: HandlersMap<NodeContentT>,
 }
 
-function formatTag<NodeContentT>(tag: Tag, opts: FormatOptions<NodeContentT>): NodeContentT | null
+function formatTag<NodeContentT>(tag: ReadonlyTag, opts: FormatOptions<NodeContentT>): NodeContentT | null
 {
   const { handlers } = opts;
 
@@ -31,7 +31,7 @@ function formatTag<NodeContentT>(tag: Tag, opts: FormatOptions<NodeContentT>): N
   return null;
 }
 
-function formatNode<NodeContentT>(node: Node, opts: FormatOptions<NodeContentT>): NodeContentT | null
+function formatNode<NodeContentT>(node: ReadonlyNode, opts: FormatOptions<NodeContentT>): NodeContentT | null
 {
   const { formatString } = opts;
 
@@ -49,7 +49,7 @@ function formatNode<NodeContentT>(node: Node, opts: FormatOptions<NodeContentT>)
  * The `formatString` function is used to format every string Node.
  * The `mergeNodeContents` function merges multiple items (NodeContentT) into one.
  */
-export function formatAST<NodeContentT>(ast: RichTextAST, opts: FormatOptions<NodeContentT>): NodeContentT
+export function formatAST<NodeContentT>(ast: ReadonlyRichTextAST, opts: FormatOptions<NodeContentT>): NodeContentT
 {
   const { mergeNodeContents } = opts;
 
