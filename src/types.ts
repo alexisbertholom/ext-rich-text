@@ -23,6 +23,14 @@ export type Node = string | Tag;
  */
 export type RichTextAST = Array<Node>;
 
+export interface ReadonlyTag
+{
+  readonly type: string,
+  readonly args: ReadonlyArray<ReadonlyRichTextAST>,
+}
+export type ReadonlyNode = string | ReadonlyTag;
+export type ReadonlyRichTextAST = ReadonlyArray<ReadonlyNode>;
+
 export function isTag(node: Node): node is Tag
 {
   return (node as Tag).type !== undefined;
@@ -34,6 +42,10 @@ export function isTag(node: Node): node is Tag
 export type SHTag = [ string, ...(SHRichTextAST | string)[] ];
 export type SHNode = string | SHTag;
 export type SHRichTextAST = Array<SHNode>;
+
+export type ReadonlySHTag = Readonly<[ string, ...(ReadonlySHRichTextAST | string)[] ]>;
+export type ReadonlySHNode = string | ReadonlySHTag;
+export type ReadonlySHRichTextAST = ReadonlyArray<ReadonlySHNode>;
 
 export function isSHTag(node: SHNode): node is SHTag
 {
