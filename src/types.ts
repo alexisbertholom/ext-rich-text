@@ -32,8 +32,10 @@ export type ReadonlyNode = string | ReadonlyTag;
 export type ReadonlyRichTextAST = ReadonlyArray<ReadonlyNode>;
 
 export function isTag(node: Node): node is Tag
+export function isTag(node: ReadonlyNode): node is ReadonlyTag
+export function isTag(node: ReadonlyNode): node is Tag
 {
-  return (node as Tag).type !== undefined;
+  return (node as ReadonlyTag).type !== undefined;
 }
 
 
@@ -48,6 +50,8 @@ export type ReadonlySHNode = string | ReadonlySHTag;
 export type ReadonlySHRichTextAST = ReadonlyArray<ReadonlySHNode>;
 
 export function isSHTag(node: SHNode): node is SHTag
+export function isSHTag(node: ReadonlySHNode): node is ReadonlySHTag
+export function isSHTag(node: ReadonlySHNode): node is SHTag
 {
   return Array.isArray(node);
 }
