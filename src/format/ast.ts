@@ -1,15 +1,15 @@
-import type { Tag, Node, RichTextAST } from '../types';
+import type { Tag, Node, RichTextAST, ReadonlyRichTextAST } from '../types';
 
 import { isTag } from '../types';
 
-export type TagHandler<NodeContentT> = (args: Array<RichTextAST>, opts: FormatOptions<NodeContentT>) => NodeContentT;
-export type HandlersMap<NodeContentT> = Record<string, TagHandler<NodeContentT>>;
+export type TagHandler<NodeContentT> = (args: ReadonlyArray<ReadonlyRichTextAST>, opts: FormatOptions<NodeContentT>) => NodeContentT;
+export type HandlersMap<NodeContentT> = Readonly<Record<string, TagHandler<NodeContentT>>>;
 
 export interface FormatOptions<NodeContentT>
 {
-  formatString: (s: string) => NodeContentT,
-  mergeNodeContents: (contents: Array<NodeContentT>) => NodeContentT,
-  handlers?: HandlersMap<NodeContentT>,
+  readonly formatString: (s: string) => NodeContentT,
+  readonly mergeNodeContents: (contents: ReadonlyArray<Readonly<NodeContentT>>) => NodeContentT,
+  readonly handlers?: HandlersMap<NodeContentT>,
 }
 
 function formatTag<NodeContentT>(tag: Tag, opts: FormatOptions<NodeContentT>): NodeContentT | null
