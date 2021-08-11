@@ -4,9 +4,8 @@ exports._build = void 0;
 const types_1 = require("./types");
 const escape_1 = require("./escape");
 function formatTag(tag) {
-    const { type, args, node } = tag;
-    const _args = node ? args.concat([node]) : args;
-    const parsedArgs = _args.map(arg => _build(arg));
+    const { type, args } = tag;
+    const parsedArgs = args.map(arg => _build(arg));
     const contents = [escape_1.default(type)].concat(parsedArgs).join('|');
     return `[${contents}]`;
 }

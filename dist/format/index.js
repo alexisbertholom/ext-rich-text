@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ast_1 = require("./ast");
-Object.defineProperty(exports, "formatParsedString", { enumerable: true, get: function () { return ast_1.formatParsedString; } });
+Object.defineProperty(exports, "formatAST", { enumerable: true, get: function () { return ast_1.formatAST; } });
 var string_1 = require("./string");
 Object.defineProperty(exports, "default", { enumerable: true, get: function () { return string_1.default; } });
 Object.defineProperty(exports, "strip", { enumerable: true, get: function () { return string_1.strip; } });

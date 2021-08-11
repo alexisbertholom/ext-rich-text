@@ -1,14 +1,14 @@
 import parse from '../parse';
-import { formatParsedString } from './ast';
+import { formatAST } from './ast';
 function identity(item) {
     return item;
 }
 function _mergeStrings(strings) {
     return strings.join('');
 }
-export function formatToString(parsedString, opts) {
+export function formatToString(ast, opts = {}) {
     const { formatString, handlers } = opts;
-    return formatParsedString(parsedString, {
+    return formatAST(ast, {
         formatString: formatString || identity,
         mergeNodeContents: _mergeStrings,
         handlers,

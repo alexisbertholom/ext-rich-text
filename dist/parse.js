@@ -11,7 +11,7 @@ function parseTag(str, tagStart) {
     if (str[titleEnd] === ']')
         return {
             tagEnd: titleEnd + 1,
-            tag: { type, args, node: null },
+            tag: { type, args },
         };
     let pos = titleEnd + 1;
     while (true) {
@@ -28,7 +28,6 @@ function parseTag(str, tagStart) {
         tag: {
             type,
             args,
-            node: args.pop() || null,
         },
     };
 }

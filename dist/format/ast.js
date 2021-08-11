@@ -1,33 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatParsedString = void 0;
+exports.formatAST = void 0;
 const types_1 = require("../types");
 function formatTag(tag, opts) {
     const { handlers } = opts;
-    const { type, args, node } = tag;
-    const content = (node === null) ? null : formatParsedString(node, opts);
+    const { type, args } = tag;
     if (handlers) {
-        const handler = handlers.get(type);
-        if (handler) {
-            const parsedArgs = args.map(arg => formatParsedString(arg, opts));
-            return handler(content, ...parsedArgs);
-        }
+        const handler = handlers[type];
+        if (handler)
+            return handler(args, opts);
     }
-    return content;
+    if (args.length > 0) {
+        const lastArg = args[args.length - 1];
+        return formatAST(lastArg, opts);
+    }
+    return null;
 }
 function formatNode(node, opts) {
     const { formatString } = opts;
     return types_1.isTag(node) ? (formatTag(node, opts)) : (formatString(node));
 }
-function formatParsedString(parsedString, opts) {
+function formatAST(ast, opts) {
     const { mergeNodeContents } = opts;
     const contents = new Array();
-    for (const node of parsedString) {
+    for (const node of ast) {
         const content = formatNode(node, opts);
         if (content)
             contents.push(content);
     }
     return mergeNodeContents(contents);
 }
-exports.formatParsedString = formatParsedString;
+exports.formatAST = formatAST;
 //# sourceMappingURL=ast.js.map

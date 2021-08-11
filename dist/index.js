@@ -20,7 +20,7 @@ var format_1 = require("./format");
 Object.defineProperty(exports, "format", { enumerable: true, get: function () { return format_1.default; } });
 Object.defineProperty(exports, "strip", { enumerable: true, get: function () { return format_1.strip; } });
 Object.defineProperty(exports, "formatToString", { enumerable: true, get: function () { return format_1.formatToString; } });
-Object.defineProperty(exports, "formatParsedString", { enumerable: true, get: function () { return format_1.formatParsedString; } });
+Object.defineProperty(exports, "formatAST", { enumerable: true, get: function () { return format_1.formatAST; } });
 var build_1 = require("./build");
 Object.defineProperty(exports, "build", { enumerable: true, get: function () { return build_1.default; } });
 var shorthand_build_1 = require("./shorthand-build");

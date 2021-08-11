@@ -9,9 +9,9 @@ function identity(item) {
 function _mergeStrings(strings) {
     return strings.join('');
 }
-function formatToString(parsedString, opts) {
+function formatToString(ast, opts = {}) {
     const { formatString, handlers } = opts;
-    return ast_1.formatParsedString(parsedString, {
+    return ast_1.formatAST(ast, {
         formatString: formatString || identity,
         mergeNodeContents: _mergeStrings,
         handlers,
